@@ -14,6 +14,9 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(name = "UserTable")
 public class User {
 
+    public enum roles{
+        ADMIN, USER
+    };
 
     @GeneratedValue(strategy = SEQUENCE)
     @Id
@@ -30,6 +33,12 @@ public class User {
 
     @Column(unique = true)
     private String emailId;
+
+    @Column
+    private String password;
+
+    @Column
+    private roles role;
 
     @Column
     private Boolean employmentStatus;
@@ -50,17 +59,26 @@ public class User {
         super();
     }
 
-    public User(String userFName, Long id, String userLName, String gender, String emailId, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber) {
-        this.userFName = userFName;
+    public User(Long id, String userFName, String userLName, String gender, String emailId, String password, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber) {
         this.id = id;
+        this.userFName = userFName;
         this.userLName = userLName;
         this.gender = gender;
         this.emailId = emailId;
+        this.password = password;
         this.employmentStatus = employmentStatus;
         this.companyName = companyName;
         this.education = education;
         this.homeTown = homeTown;
         this.contactNumber = contactNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
@@ -142,4 +160,6 @@ public class User {
     public void setContactNumber(Long contactNumber) {
         this.contactNumber = contactNumber;
     }
+
+
 }

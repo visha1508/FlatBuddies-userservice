@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserTableRepository extends JpaRepository<User, Long> {
 
     Boolean existsByEmailId(String emailId);
+    User findByEmailId(String emailId);
 }
