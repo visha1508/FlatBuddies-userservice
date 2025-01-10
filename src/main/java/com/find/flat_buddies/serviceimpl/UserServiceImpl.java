@@ -4,6 +4,7 @@ import com.find.flat_buddies.model.User;
 import com.find.flat_buddies.repository.UserTableRepository;
 import com.find.flat_buddies.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserTableRepository userTableRepository;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     @Override
     public User registerUser(User user) {
         if(userTableRepository.existsByEmailId(user.getEmailId()))
             return null;
 
+        user.setPassword(encoder.encode(user.getPassword()));
         User savedUser = userTableRepository.save(user);
 
         return savedUser.getId() != null ? savedUser : null;

@@ -37,6 +37,7 @@ public class User {
     @Column
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private roles role;
 
@@ -59,18 +60,27 @@ public class User {
         super();
     }
 
-    public User(Long id, String userFName, String userLName, String gender, String emailId, String password, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber) {
+    public User(Long id, String userFName, String userLName, String gender, String emailId, String password, roles role, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber) {
         this.id = id;
         this.userFName = userFName;
         this.userLName = userLName;
         this.gender = gender;
         this.emailId = emailId;
         this.password = password;
+        this.role = role;
         this.employmentStatus = employmentStatus;
         this.companyName = companyName;
         this.education = education;
         this.homeTown = homeTown;
         this.contactNumber = contactNumber;
+    }
+
+    public roles getRole() {
+        return role;
+    }
+
+    public void setRole(roles role) {
+        this.role = role;
     }
 
     public String getPassword() {
