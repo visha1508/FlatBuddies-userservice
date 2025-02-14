@@ -27,13 +27,17 @@ public class SpringConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 //every request needs to be authorized
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/register", "/login") // Use path patterns
+                        .permitAll() // You might want these to be publicly accessible (use permitAll instead of authenticated)
+                )
                 //default customization
                 .httpBasic(Customizer.withDefaults())
                 //make http requests stateless
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

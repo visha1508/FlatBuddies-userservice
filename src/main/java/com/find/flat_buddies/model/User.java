@@ -6,11 +6,11 @@ import lombok.*;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-@Setter
-@Getter
+import java.util.List;
+
+
 @Entity
 @ToString
-@AllArgsConstructor
 @Table(name = "UserTable")
 public class User {
 
@@ -18,8 +18,9 @@ public class User {
         ADMIN, USER
     };
 
-    @GeneratedValue(strategy = SEQUENCE)
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
     private Long id;
 
     @Column
@@ -55,12 +56,16 @@ public class User {
 
     @Column
     private Long contactNumber;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private List<PropertyDetails> property;
 
     public User() {
         super();
     }
 
-    public User(Long id, String userFName, String userLName, String gender, String emailId, String password, roles role, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber) {
+    public User(Long id, String userFName, String userLName, String gender, String emailId, String password, roles role, Boolean employmentStatus, String companyName, String education, String homeTown, Long contactNumber, List<PropertyDetails> property) {
         this.id = id;
         this.userFName = userFName;
         this.userLName = userLName;
@@ -73,7 +78,10 @@ public class User {
         this.education = education;
         this.homeTown = homeTown;
         this.contactNumber = contactNumber;
+        this.property = property;
     }
+    
+    
 
     public roles getRole() {
         return role;
@@ -170,6 +178,20 @@ public class User {
     public void setContactNumber(Long contactNumber) {
         this.contactNumber = contactNumber;
     }
+
+	/**
+	 * @return the property
+	 */
+	public List<PropertyDetails> getProperty() {
+		return property;
+	}
+
+	/**
+	 * @param property the property to set
+	 */
+	public void setProperty(List<PropertyDetails> property) {
+		this.property = property;
+	}
 
 
 }
