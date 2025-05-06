@@ -41,20 +41,20 @@ public class UserController {
 
         if (savedUser != null && savedUser.getEmailId() != null) {
             // User was successfully saved and has an ID
-            return new ResponseEntity<>("User saved successfully", HttpStatus.CREATED);
+            return new ResponseEntity<String>("User saved successfully", HttpStatus.CREATED);
         } else {
             // If user is not saved
-            return new ResponseEntity<>("Failed to save user", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Failed to save user", HttpStatus.BAD_REQUEST);
         }
     }
     
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto){
     	User user = userService.login(loginDto);
     	if(user.getId() > 0)
-    		return new ResponseEntity<>(user, HttpStatus.OK);
+    		return new ResponseEntity<String>(user.getUserFName(), HttpStatus.OK);
     	
-    	return new ResponseEntity<>("Login Failed", HttpStatus.NOT_FOUND);
+    	return new ResponseEntity<String>("Login Failed", HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -62,15 +62,9 @@ public class UserController {
      * @return all users
      */
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAllUsers() {
-        List<User> users= userService.getAllUsers();
-
-        if (users.isEmpty())
-            //No users Found
-            return new ResponseEntity<>("No users found", HttpStatus.OK);
-        else
-            //Returning Users
-            return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllUsers() {
+    	List<User> users = userService.getAllUsers();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
 }

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 //import jakarta.persistence.Id;
 
-import static jakarta.persistence.GenerationType.SEQUENCE;
-
 import java.util.List;
 
 

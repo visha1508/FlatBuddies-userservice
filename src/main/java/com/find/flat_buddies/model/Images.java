@@ -21,6 +21,7 @@ import lombok.Setter;
 @Table(name = "Images")
 public class Images {
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 
 	@Id
