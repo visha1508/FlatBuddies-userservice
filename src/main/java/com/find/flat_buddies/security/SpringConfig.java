@@ -26,6 +26,7 @@ public class SpringConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF protection for testing or APIs
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll() // Permit all requests
                 )
